@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import Table from "./Table";
 
 export default class Repo extends Component {
   render() {
     return (
-      <div style={{ border: '3px red solid' }}>
+      <React.Fragment>
         <h6>Repo</h6>
-      </div>
+        <div>
+          <Table repos={this.props.repos} />
+        </div>
+      </React.Fragment>
     );
   }
 }
