@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 export default class Add extends Component {
   state = {
     title: "",
@@ -23,7 +22,7 @@ export default class Add extends Component {
 
   render() {
     const { state, handleChange, handleSumbit } = this;
-    const { title, language ,status } = state;
+    const { title, language, status } = state;
 
     return (
       <div className="container mt-5">

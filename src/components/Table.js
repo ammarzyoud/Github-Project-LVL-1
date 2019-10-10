@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import Repo from "./Repo";
 
 export default class Table extends Component {
   render() {
     const { props } = this;
-    const { repos, deleteRepo , checkStatus } = props;
+    const { deleteRepo, checkStatus } = props;
     return (
-      <div className="container">
+      <div className="container mt-5">
         <h6>Repos</h6>
-        <table className="table w-75">
+        <table className="table mt-3">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -20,27 +21,14 @@ export default class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {repos.map((repo, index) => (
-              <tr value={repo} key={index}>
-                <td>{repo.id}</td>
-                <td>{repo.title}</td>
-                <td>{repo.status.toUpperCase()}</td>
-                <td>{repo.language}</td>
-                <td>
-                  <input type="checkbox" onClick = {() => checkStatus(repo.id)} style={{ cursor : "pointer" }} />
-                </td>
-                <td>{repo.status === "Private" ? "YES" : "NO"}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => deleteRepo(repo.id)}
-                  >
-                    &#128465;
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {
+            this.props.repos.map(repo => {
+              return <Repo 
+              repo={repo}
+              deleteRepo={deleteRepo}
+              checkStatus={checkStatus} />
+            })
+            }
           </tbody>
         </table>
       </div>

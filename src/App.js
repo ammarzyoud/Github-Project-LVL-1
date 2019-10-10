@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import Repo from "./components/Repo";
+import Table from "./components/Table";
 import Add from "./components/Add";
 import Header from "./components/Header";
 import uuid from "uuid";
 import "bootstrap/dist/css/bootstrap.css";
+import Footer from "./components/Footer";
 
 export default class App extends Component {
   state = {
@@ -30,7 +31,7 @@ export default class App extends Component {
   };
 
   checkStatus = id => {
-    console.log("id :" , id);
+    console.log("id :", id);
     const newArr = this.state.repos.map(repo => {
       if (repo.id === id) {
         if (repo.status === "Private") {
@@ -41,7 +42,7 @@ export default class App extends Component {
       }
       return repo;
     });
-    this.setState({ repos : newArr });
+    this.setState({ repos: newArr });
   };
 
   deleteRepo = id => {
@@ -54,16 +55,16 @@ export default class App extends Component {
     });
   };
 
-  AddRepo = ( title , language , status ) => {
+  AddRepo = (title, language, status) => {
     const { state } = this;
     const { repos } = state;
     // console.log("title :" , title , "language :" , language);
     const newRepo = {
       id: uuid.v4(),
-      title ,
-      status ,
+      title,
+      status,
       language
-    }; 
+    };
     this.setState({ repos: [...repos, newRepo] });
   };
 
@@ -73,15 +74,15 @@ export default class App extends Component {
     return (
       <>
         <Header />
-        <h6>App</h6>
         <div>
-          <Repo
-            repos={repos}
-            deleteRepo={deleteRepo}
-            checkStatus={checkStatus}
-          />
+          <Table 
+          repos = {repos}
+          deleteRepo={deleteRepo}
+          checkStatus={checkStatus} />
+          <hr />
           <Add AddRepo={AddRepo} />
         </div>
+        <Footer />
       </>
     );
   }
