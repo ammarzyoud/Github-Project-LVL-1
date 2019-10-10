@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Repo from "./components/Repo";
+import Add from "./components/Add";
 import Header from "./components/Header";
+import uuid from "uuid";
 import "bootstrap/dist/css/bootstrap.css";
 
 export default class App extends Component {
@@ -26,16 +28,59 @@ export default class App extends Component {
       }
     ]
   };
+
+  checkStatus = id => {
+    console.log("id :" , id);
+    const newArr = this.state.repos.map(repo => {
+      if (repo.id === id) {
+        if (repo.status === "Private") {
+          repo.status = "Public";
+        } else {
+          repo.status = "Private";
+        }
+      }
+      return repo;
+    });
+    this.setState({ repos : newArr });
+  };
+
+  deleteRepo = id => {
+    const { state } = this;
+    const { repos } = state;
+    this.setState({
+      repos: repos.filter(elem => {
+        return elem.id !== id;
+      })
+    });
+  };
+
+  AddRepo = ( title , language , status ) => {
+    const { state } = this;
+    const { repos } = state;
+    // console.log("title :" , title , "language :" , language);
+    const newRepo = {
+      id: uuid.v4(),
+      title ,
+      status ,
+      language
+    }; 
+    this.setState({ repos: [...repos, newRepo] });
+  };
+
   render() {
-    const {state} = this ;
-    const {repos} = state ;
-    
+    const { state, deleteRepo, checkStatus, AddRepo } = this;
+    const { repos } = state;
     return (
       <>
         <Header />
         <h6>App</h6>
         <div>
-        <Repo repos={repos} />
+          <Repo
+            repos={repos}
+            deleteRepo={deleteRepo}
+            checkStatus={checkStatus}
+          />
+          <Add AddRepo={AddRepo} />
         </div>
       </>
     );
